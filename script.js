@@ -1,7 +1,7 @@
+//To add an edit functionality, night mode & storage
 
 const main = document.querySelector('main');
 const addNewBookBtn = document.getElementById('add_book_btn');
-
 const form = document.querySelector('form');
 const bookTitle = form.querySelector('#book_title');
 const bookAuthor = form.querySelector('#book_author');
@@ -15,118 +15,105 @@ const errorMsg = document.querySelectorAll('.error_msg');
 const inputsDisplaySection = document.querySelector('#input_display');
 const popOutMsg = document.querySelector('#pop_msg');
 const popOuth4 = popOutMsg.querySelector('h4');
-
-let allCards,haveReadOrNot;
+const deleteTaskButtons = popOutMsg.querySelectorAll('.delete_task_button');
+let allCards,aBookIndex;
 const library = [];
-const indexToDelete = [];
 
-// const removeCardReadOrNotEvent = () => {
-//     if (allCards) {
-//         allCards.forEach(card => {
-//             card.removeEventListener('mousedown', (e) => {
-//                 console.log('removed');
-//             });
-//         })
-//     }
-// }
+const giveTheCardIndex = (theCard) => {
+    for (let i = 0; i < allCards.length; i++) {
+        if (theCard === allCards[i]) {
+            return i;
+        }
+    }
+}
+
+const removeCardReadOrNotEvent = () => {
+    if (allCards) {
+        allCards.forEach(card => {
+            card.removeEventListener('mousedown',cardManipulate);
+        })
+    }
+}
 
 const deleteABook = (e) => {
     if (e.target.innerText === 'No') {
         main.classList.remove('blur2');
         popOutMsg.classList.add('hidden'); 
-        indexToDelete.splice(0,indexToDelete.length);
-        console.log(`empty? ${indexToDelete}`);
     }
     else if (e.target.innerText === 'Yes') {
-        for (let i = indexToDelete[0]; i < library.length; i++) {
+        let i;
+        for (i = aBookIndex; i < library.length; i++) {
             library[i] = library[i+1];
         }
         library.length --;
-        console.log(indexToDelete[0]);
-        allCards[indexToDelete[0]].remove();
-        indexToDelete = [];
-        console.log(indexToDelete);
+        allCards[aBookIndex].remove();
         main.classList.remove('blur2');
         popOutMsg.classList.add('hidden'); 
+        allCards = document.querySelectorAll('.a_card');
     }
+} 
+
+
+const removeDeleteActionTargetted = () => {
+    deleteTaskButtons.forEach(button => {
+        button.removeEventListener('mousedown',deleteABook);
+      }) 
+}
+
+const deleteActionTargetted = () => {
+    deleteTaskButtons.forEach(button => {
+      button.addEventListener('mousedown',deleteABook);
+    })    
 }
 
 const cardManipulate = (e) => {
-    console.log(/*'index: '+index,*/ 'card: '+e.target);
+    let theCard,theCardIndex;
     if (e.target.matches('.remove_task_btn')) {
-        indexToDelete.push(index);
+        theCard = e.target.parentElement.parentElement;
+        theCardIndex = giveTheCardIndex(theCard);
         main.classList.add('blur2');
         popOutMsg.classList.remove('hidden');
-        popOuth4.innerText = `Are you sure you want to delete book ${library[indexToDelete[0]].objectBookTitle} ?`;
-        console.log(indexToDelete);
-    }
-    console.log(e.target,library[index].objectBookReadOrNot,index);
-    if ((e.target.matches('.toggle_container') || e.target.matches('.toggle')) && library[index].objectBookReadOrNot == true) {
-        if (e.target.matches('.toggle_container')) {
-            e.stopPropagation();
+        popOuth4.innerText = `Are you sure you want to delete book ${library[theCardIndex].objectBookTitle} ?`;
+        aBookIndex = theCardIndex;
+    } 
+
+    if (e.target.matches('.toggle_container') || e.target.matches('.toggle_container.active')) {
+        theCard = e.target.parentElement.parentElement.parentElement.parentElement;
+        theCardIndex = giveTheCardIndex(theCard);
+        if (library[theCardIndex].objectBookReadOrNot === true) {
+            e.target.setAttribute('class','toggle_container');
+            e.target.previousElementSibling.innerText = "I've not read the book."; 
+            library[theCardIndex].objectBookReadOrNot = false;               
+        }
+        else {
             e.target.setAttribute('class','toggle_container active');
             e.target.previousElementSibling.innerText = "I've read the book.";
+            library[theCardIndex].objectBookReadOrNot = true; 
+        }
+    }
+    else if (e.target.matches('.toggle')) {
+        theCard = e.target.parentElement.parentElement.parentElement.parentElement.parentElement;
+        theCardIndex = giveTheCardIndex(theCard);
+        if (library[theCardIndex].objectBookReadOrNot === true) {
+            e.target.parentElement.setAttribute('class','toggle_container');
+            e.target.parentElement.previousElementSibling.innerText = "I've not read the book."; 
+            library[theCardIndex].objectBookReadOrNot = false;               
         }
         else {
-            e.stopPropagation();
             e.target.parentElement.setAttribute('class','toggle_container active');
             e.target.parentElement.previousElementSibling.innerText = "I've read the book.";
+            library[theCardIndex].objectBookReadOrNot = true; 
         }
-        library[index].objectBookReadOrNot = false;
-    }
-    else if ((e.target.matches('.toggle_container.active') || e.target.matches('.toggle')) && library[index].objectBookReadOrNot == false) {
-        if (e.target.matches('.toggle_container.active')) {
-            e.stopPropagation();
-            e.target.setAttribute('class','toggle_container');
-            e.target.previousElementSibling.innerText = "I've not read the book.";
-        }
-        else {
-            e.stopPropagation();
-            e.target.parentElement.setAttribute('class','toggle_container');
-            e.target.parentElement.previousElementSibling.innerText = "I've not read the book.";
-        }
-        library[index].objectBookReadOrNot = true;
-    }    
+    } 
 }
 
-const aCardTargetted = (e) => {
-
-    console.log('in');
+const aCardTargetted = () => {
     if (allCards) {
     allCards.forEach((card,index) => {
-        card.addEventListener('mousedown',cardManipulate);//(e) => {
-        //     console.log(e.target,library[index].objectBookReadOrNot,index);
-        //     if ((e.target.matches('.toggle_container') || e.target.matches('.toggle')) && library[index].objectBookReadOrNot == true) {
-        //         if (e.target.matches('.toggle_container')) {
-        //             e.stopPropagation();
-        //             e.target.setAttribute('class','toggle_container active');
-        //             e.target.previousElementSibling.innerText = "I've read the book.";
-        //         }
-        //         else {
-        //             e.stopPropagation();
-        //             e.target.parentElement.setAttribute('class','toggle_container active');
-        //             e.target.parentElement.previousElementSibling.innerText = "I've read the book.";
-        //         }
-        //         library[index].objectBookReadOrNot = false;
-        //     }
-        //     else if ((e.target.matches('.toggle_container.active') || e.target.matches('.toggle')) && library[index].objectBookReadOrNot == false) {
-        //         if (e.target.matches('.toggle_container.active')) {
-        //             e.stopPropagation();
-        //             e.target.setAttribute('class','toggle_container');
-        //             e.target.previousElementSibling.innerText = "I've not read the book.";
-        //         }
-        //         else {
-        //             e.stopPropagation();
-        //             e.target.parentElement.setAttribute('class','toggle_container');
-        //             e.target.parentElement.previousElementSibling.innerText = "I've not read the book.";
-        //         }
-        //         library[index].objectBookReadOrNot = true;
-        //     }    
-        // });
-
-       // })
-    })
-}}
+        card.addEventListener('mousedown',cardManipulate);
+        })
+    }
+}
 
 const makeTheBookCard = bookInformation => {
     const unformattedDate = bookInformation.objectBookPublished.split('-');
@@ -307,6 +294,15 @@ const clickDocumentToHideForm = (e) => {
     }
 }
 
+const documentKeyBoardEventListener = (e) => {
+    if (e.ctrlKey && e.key === 'Enter') {
+        submitForm(e);
+    }
+    if (e.ctrlKey && ((e.key === 'q') || (e.key === 'Q') )) {
+        showForm();
+    }
+}
+
 const showForm = () => {
     errorMsg.forEach(paraMsg => {
         paraMsg.innerText = '';
@@ -322,7 +318,9 @@ const showForm = () => {
     main.classList.add('blur');
 }
 
-popOutMsg.addEventListener('mousedown',deleteABook);
-inputsDisplaySection.addEventListener('mouseenter',aCardTargetted,false);
-//inputsDisplaySection.addEventListener('mouseleave',removeCardReadOrNotEvent);
+popOutMsg.addEventListener('mouseover',deleteActionTargetted);
+popOutMsg.addEventListener('mouseout',removeDeleteActionTargetted);
+inputsDisplaySection.addEventListener('mouseover',aCardTargetted);
+inputsDisplaySection.addEventListener('mouseout',removeCardReadOrNotEvent);
 addNewBookBtn.addEventListener('click',showForm);
+document.addEventListener('keydown',documentKeyBoardEventListener);

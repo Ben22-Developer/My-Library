@@ -12,7 +12,6 @@ body {
     background-image: url(Images/cover.jpg);
     background-size: cover;
     backdrop-filter: blur(4px);
-
 }
 main {
     height: 100vh;
@@ -65,7 +64,7 @@ form {
     width:max-content;
     padding:3rem 2rem 0 1rem;
     background-color: var(--light-orange);
-    transition: transform 1500ms, visibility 1500ms;
+    transition: transform 1000ms, visibility 1000ms;
     
     * {
         display: block;
@@ -101,6 +100,9 @@ form {
         }   
     }
     #submit_button {
+        font-size: 1rem;
+        padding:.1rem .5rem;
+        margin: auto;
         width: 10rem;
         border-radius: .5rem;
         border:none;
@@ -265,5 +267,23 @@ form {
         display: flex;
         justify-content: center;
         gap:1rem;
+    }
+}
+
+@media (width < 720px) {
+    html {
+        font-size: 13px;
+    }
+}
+
+@media (width < 500px) {
+    html {
+        font-size: 10px;
+    }
+}
+
+@media (width < 375px) {
+    html {
+        font-size: 9px; 
     }
 }
