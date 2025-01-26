@@ -78,7 +78,7 @@ form {
     input {
         width:20rem;
         height: 2.5rem;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         margin: .5rem auto;
     }
     label {
@@ -133,6 +133,7 @@ form {
     width: 95%;
     display: grid;
     grid-template-columns: repeat(auto-fill,minmax(31rem,.7fr));
+    justify-content: center;
     gap:2rem;
     padding:1rem .5rem 0 2rem;
         .a_card {
@@ -272,18 +273,24 @@ form {
 
 @media (width < 720px) {
     html {
-        font-size: 13px;
+        font-size: 14px;
     }
 }
 
 @media (width < 500px) {
     html {
-        font-size: 10px;
+        font-size: 12px;
     }
 }
 
-@media (width < 375px) {
+@media (width < 430px) {
     html {
-        font-size: 9px; 
+        font-size: 10px; 
+    }
+}
+
+@media (width < 355px) {
+    html {
+        font-size: 8px; 
     }
 }
