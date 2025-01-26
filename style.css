@@ -1,0 +1,269 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+:root {
+    --dark-orange:rgb(255, 89, 29);
+    --light-orange:rgb(219, 207, 188);
+}
+body {
+    background-image: url(Images/cover.jpg);
+    background-size: cover;
+    backdrop-filter: blur(4px);
+
+}
+main {
+    height: 100vh;
+    overflow-y: auto;
+    padding-bottom: 3rem;
+}
+.blur {
+    form {
+        filter: blur(0);
+        opacity: 1;
+    }
+    header,#input_display,#add_book_btn {
+        filter: blur(.2rem);
+        opacity: .75;
+        pointer-events: none;
+    }
+}
+
+.blur2 {
+    header,#input_display,#add_book_btn {
+        filter: blur(.2rem);
+        opacity: .75;
+        pointer-events: none;
+    }
+}
+
+header {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: rgb(255, 255, 255);
+    text-align: center;
+    padding: 1.5rem 0;
+    h1 {
+        margin-bottom: 1rem;
+    }
+}
+
+/*User information input*/
+section:first-of-type {
+    display: flex;
+    justify-content: center;
+}
+
+form {
+    height: 100vh;
+    position: absolute;
+    top:50%;
+    left:0;
+    translate: 0 -50%;
+    z-index: 1;
+    width:max-content;
+    padding:3rem 2rem 0 1rem;
+    background-color: var(--light-orange);
+    transition: transform 1500ms, visibility 1500ms;
+    
+    * {
+        display: block;
+    }
+    fieldset {
+        width: 25rem;
+    }
+    legend {
+        text-align: center;
+    }
+    input {
+        width:20rem;
+        height: 2.5rem;
+        font-size: 1.5rem;
+        margin: .5rem auto;
+    }
+    label {
+        margin: 1.7rem auto;
+        width: 20rem;
+    }
+    label:last-of-type {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: .5rem;
+        span {        
+            margin-left: 0rem;
+        }
+        input {
+            width: 1rem;
+            height: 1rem;
+            margin: 0 0 0 0;
+        }   
+    }
+    #submit_button {
+        width: 10rem;
+        border-radius: .5rem;
+        border:none;
+        background-color: var(--dark-orange);
+        color: aliceblue;
+        transition: transform 1000ms,background-color 1000ms;
+    }
+    #submit_button:hover {
+        cursor: pointer;
+        color: black;
+        background-color: rgb(255, 118, 69);
+        transform: translateY(-20%);
+
+    }
+    .error_msg {
+        font-size: .8rem;
+    }
+}
+
+.hidden {
+    transform: translateX(-120%);
+    visibility: hidden;
+}
+
+/*User displaying section*/
+#input_display {
+    margin: auto;
+    width: 95%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(31rem,.7fr));
+    gap:2rem;
+    padding:1rem .5rem 0 2rem;
+        .a_card {
+            position: relative;
+            padding:1rem 2rem;
+            background-color: var(--light-orange); 
+            display: flex;
+            justify-content: space-between;
+        .bookInfo_and_details {
+            .details {
+                .book {
+                    position: relative;
+                    display: flex;
+                    width: max-content;
+                    color: var(--dark-orange);
+                    transform: translateX(30%);
+                    .book_side {
+                        height: 2rem;
+                        width: 3rem;
+                        border: .1rem solid;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    .book_side.left {
+                        border-top-right-radius: .7rem;
+                    }
+                    .book_side.right {
+                        border-top-left-radius: .7rem;
+                    }
+                    p {
+                        position: absolute;
+                        font-size: .8rem;
+                    }
+                    p:first-of-type {
+                        left: 0;
+                        top:50%;
+                        transform: translateX(-115%) translateY(-50%);
+                    }
+                    p:last-of-type {
+                        right: 0;
+                        top:50%;
+                        transform: translateX(115%) translateY(-50%);
+                    } 
+                }
+            }
+        }
+    }
+    img {
+        width: 10rem;
+        height: 10rem;
+    }
+    .book_information {
+        margin: 1rem 0 0 0;
+        list-style: none;
+        line-height: 2.5rem;
+        li {
+            span {
+                text-decoration: underline;
+            }
+        }
+        li:last-of-type {
+            p {
+                font-weight: bold;            
+            }
+        }
+    }
+}
+
+/*Buttons*/
+.toggle_container {
+    width: 4rem;
+    height: 1.7rem;
+    border: .2rem solid var(--dark-orange);
+    border-radius: 1rem;
+    .toggle {
+        width: 50%;
+        height: 100%;
+        background-color: var(--dark-orange);
+        border-radius: 1rem;
+        transform: translateX(0);
+        transition: transform 1000ms;
+    }
+}
+
+.toggle_container.active {
+    background-color: rgba(250, 96, 0, 0.365);
+    .toggle {
+        transform: translateX(100%);
+    }
+}
+
+#add_book_btn,.delete_task_button {
+    border: none;
+    padding: .5rem 2rem;
+    margin: 1rem 0 0 0;
+    font-weight: bold;
+    font-size: 1.2rem;
+    transition: transform 1000ms;
+}
+
+#close_form_btn,.remove_task_btn {
+    position: absolute;
+    top:0%;
+    right:1%;
+    background-color: transparent;
+    border:none;
+    font-size: 1.8rem;
+}
+
+.toggle_container:hover,button:hover {
+    cursor: pointer;
+}
+
+.delete_task_button:hover,#add_book_btn:hover {
+    transform: translateY(-25%);
+    background-color: var(--light-orange);
+}
+
+#pop_msg {
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: var(--dark-orange);
+    width: max-content;
+    padding: 1rem 2rem;
+    transition: transform 1000ms;
+    div {
+        margin: 1rem 0 0 0;
+        display: flex;
+        justify-content: center;
+        gap:1rem;
+    }
+}
