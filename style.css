@@ -56,6 +56,7 @@ section:first-of-type {
 
 form {
     height: 100vh;
+    overflow-y:auto;
     position: absolute;
     top:50%;
     left:0;
@@ -96,14 +97,13 @@ form {
         input {
             width: 1rem;
             height: 1rem;
-            margin: 0 0 0 0;
+            margin: 0;
         }   
     }
     #submit_button {
         font-size: 1rem;
-        padding:.1rem .5rem;
+        padding:.5rem 1rem;
         margin: auto;
-        width: 10rem;
         border-radius: .5rem;
         border:none;
         background-color: var(--dark-orange);
@@ -129,7 +129,6 @@ form {
 
 /*User displaying section*/
 #input_display {
-    margin: auto;
     width: 95%;
     display: grid;
     grid-template-columns: repeat(auto-fill,minmax(31rem,.7fr));
@@ -238,7 +237,7 @@ form {
 
 #close_form_btn,.remove_task_btn {
     position: absolute;
-    top:0%;
+    top:2%;
     right:1%;
     background-color: transparent;
     border:none;
@@ -271,26 +270,68 @@ form {
     }
 }
 
-@media (width < 720px) {
-    html {
-        font-size: 14px;
+@media (width < 600px) {
+    h2 {
+        font-size: 1.2rem;
+    }
+    form {
+        padding: 3rem 0 0 0;
+        fieldset {
+            width: max-content;
+            padding: 0 1rem;
+        }
+        label {
+            margin: 1rem 0 1rem 0;
+        }
+    }
+    #input_display {
+        display: grid;
+        grid-template-columns: repeat(auto-fill,minmax(24rem,1fr));
+        justify-content: center;
+        gap:2rem;
+        .a_card {
+            padding:.5rem;
+        }
     }
 }
 
-@media (width < 500px) {
-    html {
-        font-size: 12px;
+@media (width < 480px) {
+    h1 {
+        font-size: 1.5rem;
     }
+    h2 {
+        font-size: .85rem;
+    } 
 }
 
-@media (width < 430px) {
-    html {
-        font-size: 10px; 
+@media (width < 400px) {
+    form {
+        font-size: .7rem;
+        #close_form_btn {
+            font-size: 1.3rem;
+        }
+        label {
+            width: max-content;
+        }
+        input {
+            width: 15rem;
+            margin: 0;
+            font-size: 1rem;
+        }
+        #submit_button {
+            font-size: .7rem;
+            padding: .5rem;
+        }
     }
-}
-
-@media (width < 355px) {
-    html {
-        font-size: 8px; 
+    #input_display {
+        font-size: .8rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fill,minmax(18rem,1fr));
+        justify-content: center;
+        img {
+            width: 6rem;
+            height: 6rem;
+            align-self: center;
+        }
     }
 }
